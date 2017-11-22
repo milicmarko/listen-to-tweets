@@ -113,6 +113,7 @@ public class Gui extends JFrame {
 					countTweets = 0;
 					allFemale = 0;
 					allMale = 0;
+					hours = 0;
 					filterTwitterStream();
 				}
 			}
@@ -267,7 +268,7 @@ public class Gui extends JFrame {
 				imgUrl = "tempImage.jpg";
 
 				WeightedStandardPixelTrainer weightedStandardPixelTrainer = new WeightedStandardPixelTrainer();
-				Mat[] faces = new FaceDetector().snipFace(imgUrl, new Size(90, 90));
+				Mat[] faces = new FaceDetector().snipFace(imgUrl, new Size(100, 100));
 
 				if (faces.length != 0) {
 					int female = 0;
@@ -305,7 +306,6 @@ public class Gui extends JFrame {
 						ImageResizer.resize(imgUrl, imgUrl, 100, 100);
 						bimg = ImageIO.read(new File(imgUrl));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -354,19 +354,21 @@ public class Gui extends JFrame {
 						break;
 					}
 
-					countTweets++;
-					if (hours != 0) {
-						tfTweetsPerHour.setText(Integer.toString(countTweets / hours));
-						tfMale.setText(Integer.toString(allMale / hours));
-						tfFemale.setText(Integer.toString(allFemale / hours));
-					} else {
-						tfTweetsPerHour.setText(Integer.toString(countTweets));
-						tfMale.setText(Integer.toString(allMale));
-						tfFemale.setText(Integer.toString(allFemale));
-					}
 					System.out.println(countTweets);
 
 					i++;
+				}
+
+				countTweets++;
+
+				if (hours != 0) {
+					tfTweetsPerHour.setText(Integer.toString(countTweets / hours));
+					tfMale.setText(Integer.toString(allMale / hours));
+					tfFemale.setText(Integer.toString(allFemale / hours));
+				} else {
+					tfTweetsPerHour.setText(Integer.toString(countTweets));
+					tfMale.setText(Integer.toString(allMale));
+					tfFemale.setText(Integer.toString(allFemale));
 				}
 			}
 
@@ -413,7 +415,6 @@ public class Gui extends JFrame {
 		} catch (IOException e) {
 			System.err.printf("Failed while reading bytes from %s: %s", url.toExternalForm(), e.getMessage());
 			e.printStackTrace();
-			// Perform any other exception handling that's appropriate.
 		} finally {
 			try {
 				is.close();
