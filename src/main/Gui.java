@@ -56,6 +56,8 @@ public class Gui extends JFrame {
 	static StatusListener listener;
 	static FilterQuery fq;
 	static ConfigurationBuilder cb;
+	static WeightedStandardPixelTrainer weightedStandardPixelTrainer;
+	static byte[] imgBytes;
 
 	private static final long serialVersionUID = 7167632922308975271L;
 	private JTextField tfListenFor;
@@ -245,13 +247,11 @@ public class Gui extends JFrame {
 
 			@Override
 			public void onException(Exception arg0) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onTrackLimitationNotice(int arg0) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -263,11 +263,11 @@ public class Gui extends JFrame {
 
 				System.out.println(status.getMediaEntities()[0].getExpandedURL());
 
-				byte[] imgBytes = loadBytes(status.getMediaEntities()[0].getMediaURLHttps());
+				imgBytes = loadBytes(status.getMediaEntities()[0].getMediaURLHttps());
 				saveBytes("tempImage.jpg", imgBytes);
 				imgUrl = "tempImage.jpg";
 
-				WeightedStandardPixelTrainer weightedStandardPixelTrainer = new WeightedStandardPixelTrainer();
+				weightedStandardPixelTrainer = new WeightedStandardPixelTrainer();
 				Mat[] faces = new FaceDetector().snipFace(imgUrl, new Size(100, 100));
 
 				if (faces.length != 0) {
@@ -374,19 +374,16 @@ public class Gui extends JFrame {
 
 			@Override
 			public void onDeletionNotice(StatusDeletionNotice arg0) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onScrubGeo(long arg0, long arg1) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onStallWarning(StallWarning arg0) {
-				// TODO Auto-generated method stub
 
 			}
 
